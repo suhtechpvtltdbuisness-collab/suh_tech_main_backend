@@ -16,7 +16,7 @@ router.get("/:id", authenticate, (req, res) =>
   holidayController.getHolidayById(req, res),
 );
 
-router.post("/", authenticate, requireAdmin, (req, res) =>
+router.post("/", authenticate, (req, res) =>
   holidayController.createHoliday(req, res),
 );
 

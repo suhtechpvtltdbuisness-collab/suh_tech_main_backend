@@ -25,11 +25,9 @@ router.get("/:id", authenticate, (req, res) =>
 
 /**
  * POST /jobs
- * Create new job - Admin only
+ * Create new job - Authenticated users
  */
-router.post("/", authenticate, requireAdmin, (req, res) =>
-  jobController.createJob(req, res),
-);
+router.post("/", authenticate, (req, res) => jobController.createJob(req, res));
 
 /**
  * PUT /jobs/:id

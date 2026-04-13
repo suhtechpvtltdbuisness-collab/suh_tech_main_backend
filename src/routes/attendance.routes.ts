@@ -8,17 +8,16 @@ import { attendanceController } from "../controllers/attendance.controller.js";
 import {
   authenticate,
   requireAdmin,
-  requireOwnerOrAdmin,
 } from "../middleware/auth.js";
 
 const router = Router();
 
 /**
  * GET /api/attendances
- * Get all attendances - Admin only
+ * Get all attendances - Authenticated users
  * Query params: userId, startDate, endDate, status, date (filters by created_at)
  */
-router.get("/", authenticate, requireAdmin, (req, res) =>
+router.get("/", authenticate, (req, res) =>
   attendanceController.getAllAttendances(req, res),
 );
 
@@ -32,22 +31,21 @@ router.post("/", authenticate, (req, res) =>
 
 /**
  * GET /api/attendances/user/:userId
- * Get attendances for specific user - Owner or Admin
+ * Get attendances for specific user - Authenticated users
  * Query params: startDate, endDate
  */
-router.get("/user/:userId", authenticate, requireOwnerOrAdmin, (req, res) =>
+router.get("/user/:userId", authenticate, (req, res) =>
   attendanceController.getUserAttendances(req, res),
 );
 
 /**
  * GET /api/attendances/user/:userId/stats
- * Get attendance statistics for specific user - Owner or Admin
+ * Get attendance statistics for specific user - Authenticated users
  * Query params: startDate, endDate
  */
 router.get(
   "/user/:userId/stats",
   authenticate,
-  requireOwnerOrAdmin,
   (req, res) => attendanceController.getAttendanceStats(req, res),
 );
 

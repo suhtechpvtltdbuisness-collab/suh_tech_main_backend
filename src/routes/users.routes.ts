@@ -5,27 +5,23 @@
 
 import { Router } from "express";
 import { userController } from "../controllers/user.controller.js";
-import {
-  authenticate,
-  requireAdmin,
-  requireOwnerOrAdmin,
-} from "../middleware/auth.js";
+import { authenticate, requireAdmin } from "../middleware/auth.js";
 
 const router = Router();
 
 /**
  * GET /api/users
- * Get all users - Admin only
+ * Get all users - Authenticated users
  */
-router.get("/", authenticate, requireAdmin, (req, res) =>
+router.get("/", authenticate, (req, res) =>
   userController.getAllUsers(req, res),
 );
 
 /**
  * POST /api/users
- * Create new user - Admin only
+ * Create new user - Authenticated users
  */
-router.post("/", authenticate, requireAdmin, (req, res) =>
+router.post("/", authenticate, (req, res) =>
   userController.createUser(req, res),
 );
 
@@ -39,17 +35,17 @@ router.get("/profile", authenticate, (req, res) =>
 
 /**
  * GET /api/users/:id
- * Get user by ID - Owner or Admin
+ * Get user by ID - Authenticated users
  */
-router.get("/:id", authenticate, requireOwnerOrAdmin, (req, res) =>
+router.get("/:id", authenticate, (req, res) =>
   userController.getUserById(req, res),
 );
 
 /**
  * PUT /api/users/:id
- * Update user - Owner or Admin
+ * Update user - Admin only
  */
-router.put("/:id", authenticate, requireOwnerOrAdmin, (req, res) =>
+router.put("/:id", authenticate, requireAdmin, (req, res) =>
   userController.updateUser(req, res),
 );
 

@@ -12,7 +12,7 @@ router.get("/", authenticate, (req, res) =>
   systemPreferencesController.getPreferences(req, res),
 );
 
-router.post("/", authenticate, requireAdmin, (req, res) =>
+router.post("/", authenticate, (req, res) =>
   systemPreferencesController.savePreferences(req, res),
 );
 

@@ -14,7 +14,7 @@ const router = Router();
  * Get all designations - Authenticated users
  */
 router.get("/", authenticate, (req, res) =>
-  designationController.getAllDesignations(req, res)
+  designationController.getAllDesignations(req, res),
 );
 
 /**
@@ -22,15 +22,15 @@ router.get("/", authenticate, (req, res) =>
  * Get designation by ID - Authenticated users
  */
 router.get("/:id", authenticate, (req, res) =>
-  designationController.getDesignationById(req, res)
+  designationController.getDesignationById(req, res),
 );
 
 /**
  * POST /api/designations
- * Create new designation - Admin only
+ * Create new designation - Authenticated users
  */
-router.post("/", authenticate, requireAdmin, (req, res) =>
-  designationController.createDesignation(req, res)
+router.post("/", authenticate, (req, res) =>
+  designationController.createDesignation(req, res),
 );
 
 /**
@@ -38,7 +38,7 @@ router.post("/", authenticate, requireAdmin, (req, res) =>
  * Update designation - Admin only
  */
 router.put("/:id", authenticate, requireAdmin, (req, res) =>
-  designationController.updateDesignation(req, res)
+  designationController.updateDesignation(req, res),
 );
 
 /**
@@ -46,7 +46,7 @@ router.put("/:id", authenticate, requireAdmin, (req, res) =>
  * Delete designation - Admin only
  */
 router.delete("/:id", authenticate, requireAdmin, (req, res) =>
-  designationController.deleteDesignation(req, res)
+  designationController.deleteDesignation(req, res),
 );
 
 export default router;

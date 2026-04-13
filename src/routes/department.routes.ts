@@ -14,7 +14,7 @@ const router = Router();
  * Get all departments - Authenticated users
  */
 router.get("/", authenticate, (req, res) =>
-  departmentController.getAllDepartments(req, res)
+  departmentController.getAllDepartments(req, res),
 );
 
 /**
@@ -22,15 +22,15 @@ router.get("/", authenticate, (req, res) =>
  * Get department by ID - Authenticated users
  */
 router.get("/:id", authenticate, (req, res) =>
-  departmentController.getDepartmentById(req, res)
+  departmentController.getDepartmentById(req, res),
 );
 
 /**
  * POST /api/departments
- * Create new department - Admin only
+ * Create new department - Authenticated users
  */
-router.post("/", authenticate, requireAdmin, (req, res) =>
-  departmentController.createDepartment(req, res)
+router.post("/", authenticate, (req, res) =>
+  departmentController.createDepartment(req, res),
 );
 
 /**
@@ -38,7 +38,7 @@ router.post("/", authenticate, requireAdmin, (req, res) =>
  * Update department - Admin only
  */
 router.put("/:id", authenticate, requireAdmin, (req, res) =>
-  departmentController.updateDepartment(req, res)
+  departmentController.updateDepartment(req, res),
 );
 
 /**
@@ -46,7 +46,7 @@ router.put("/:id", authenticate, requireAdmin, (req, res) =>
  * Delete department - Admin only
  */
 router.delete("/:id", authenticate, requireAdmin, (req, res) =>
-  departmentController.deleteDepartment(req, res)
+  departmentController.deleteDepartment(req, res),
 );
 
 export default router;

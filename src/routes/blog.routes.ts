@@ -27,9 +27,9 @@ router.get("/:id", authenticate, (req, res) =>
 
 /**
  * POST /blogs
- * Create blog - Admin only
+ * Create blog - Authenticated users
  */
-router.post("/", authenticate, requireAdmin, (req, res) =>
+router.post("/", authenticate, (req, res) =>
   blogController.createBlog(req, res),
 );
 
