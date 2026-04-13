@@ -59,9 +59,17 @@ router.get("/:id", authenticate, (req, res) =>
 
 /**
  * PATCH /api/attendances/:id
- * Update attendance (clockIn/clockOut) - Admin only
+ * Update attendance (clockIn/clockOut) - Authenticated users
  */
-router.patch("/:id", authenticate, requireAdmin, (req, res) =>
+router.patch("/:id", authenticate, (req, res) =>
+  attendanceController.updateAttendance(req, res),
+);
+
+/**
+ * PUT /api/attendances/:id
+ * Update attendance - Authenticated users
+ */
+router.put("/:id", authenticate, (req, res) =>
   attendanceController.updateAttendance(req, res),
 );
 

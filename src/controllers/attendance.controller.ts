@@ -83,22 +83,18 @@ export class AttendanceController {
         dateStr = new Date().toISOString().split("T")[0];
       }
 
-      // Check admin permission for current/previous dates
-      const requestedDate = new Date(dateStr + "T00:00:00");
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
+      const targetUserId = req.body.userId || req.user!.id;
 
-      // Only admin can mark attendance for current or previous dates
-      if (requestedDate <= today && !req.user!.admin) {
+      // Non-admin users can only mark attendance for themselves.
+      if (!req.user!.admin && targetUserId !== req.user!.id) {
         return res.status(403).json({
           success: false,
-          message:
-            "Only admin users can mark attendance for current or previous dates",
+          message: "You can only mark your own attendance",
         });
       }
 
       const attendanceData = {
-        userId: req.body.userId || req.user!.id,
+        userId: targetUserId,
         date: new Date(dateStr),
         status: req.body.status,
         markedBy: req.user!.id,
