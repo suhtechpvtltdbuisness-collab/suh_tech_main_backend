@@ -168,6 +168,31 @@ export const manualInvoicePhases = pgTable("manual_invoice_phases", {
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
+// Messages table
+export const messages = pgTable("messages", {
+  id: serial("id").primaryKey(),
+  name: varchar("name", { length: 255 }).notNull(),
+  email: varchar("email", { length: 255 }).notNull(),
+  message: text("message").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  isDeleted: boolean("is_deleted").default(false).notNull(),
+});
+
+// Project Fits table
+export const projectFits = pgTable("project_fits", {
+  id: serial("id").primaryKey(),
+  name: varchar("name", { length: 255 }).notNull(),
+  company: varchar("company", { length: 255 }).notNull(),
+  contactNo: varchar("contact_no", { length: 30 }).notNull(),
+  email: varchar("email", { length: 255 }).notNull(),
+  focus: text("focus").notNull(),
+  status: varchar("status", { length: 50 }).default("pending").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  isDeleted: boolean("is_deleted").default(false).notNull(),
+});
+
 // Organizations table
 export const organizations = pgTable("organizations", {
   id: serial("id").primaryKey(),

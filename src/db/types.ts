@@ -209,6 +209,29 @@ export interface ManualInvoicePhase {
   updated_at: Date;
 }
 
+export interface Message {
+  id: number;
+  name: string;
+  email: string;
+  message: string;
+  created_at: Date;
+  updated_at: Date;
+  is_deleted: boolean;
+}
+
+export interface ProjectFit {
+  id: number;
+  name: string;
+  company: string;
+  contact_no: string;
+  email: string;
+  focus: string;
+  status: string;
+  created_at: Date;
+  updated_at: Date;
+  is_deleted: boolean;
+}
+
 export interface Holiday {
   id: number;
   name: string;
