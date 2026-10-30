@@ -26,6 +26,8 @@ export async function sendContactNotification(input: {
 
   const to =
     process.env.CONTACT_RECEIVER_EMAIL?.trim() ||
+    // Tolerate the Vercel typo CONTACT_RECEIVER_EMAI (missing final L).
+    process.env.CONTACT_RECEIVER_EMAI?.trim() ||
     process.env.SMTP_USER!.trim();
 
   await transporter().sendMail({
