@@ -4,6 +4,7 @@
  */
 
 import { messageRepository } from "../repositories/message.repository.js";
+import { sendContactNotification } from "../utils/mail.js";
 
 export class MessageService {
   async getAllMessages() {
@@ -25,10 +26,17 @@ export class MessageService {
       throw new Error("Name, email, and message are required");
     }
 
-    const created = await messageRepository.create({
+    const payload = {
       name: data.name.trim(),
       email: data.email.trim(),
       message: data.message.trim(),
+    };
+
+    const created = await messageRepository.create(payload);
+
+    // Notify inbox; do not fail the request if mail delivery has a temporary issue.
+    void sendContactNotification(payload).catch((error: unknown) => {
+      console.error("Failed to send contact notification email", error);
     });
 
     return this.formatMessageResponse(created);
