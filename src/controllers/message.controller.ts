@@ -63,6 +63,7 @@ export class MessageController {
       const payload = {
         name: req.body.name,
         email: req.body.email,
+        phone: req.body.phone,
         message: req.body.message,
       };
 
@@ -76,7 +77,10 @@ export class MessageController {
     } catch (error: any) {
       console.error("Create message error:", error);
 
-      if (error.message.includes("required")) {
+      if (
+        error.message.includes("required") ||
+        error.message.includes("invalid")
+      ) {
         return res.status(400).json({
           success: false,
           message: error.message,
@@ -104,6 +108,7 @@ export class MessageController {
       const payload = {
         name: req.body.name,
         email: req.body.email,
+        phone: req.body.phone,
         message: req.body.message,
       };
 

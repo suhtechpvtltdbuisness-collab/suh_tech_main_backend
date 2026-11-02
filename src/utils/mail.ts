@@ -68,6 +68,7 @@ function acknowledgmentContent(name: string, message: string) {
 export async function sendContactNotification(input: {
   name: string;
   email: string;
+  phone?: string;
   message: string;
 }): Promise<void> {
   if (!smtpConfigured()) {
@@ -87,6 +88,7 @@ export async function sendContactNotification(input: {
     text: [
       `Name: ${input.name}`,
       `Email: ${input.email}`,
+      ...(input.phone ? [`Phone: ${input.phone}`] : []),
       "",
       "Message:",
       input.message,
@@ -95,6 +97,7 @@ export async function sendContactNotification(input: {
       <h2>New contact form submission</h2>
       <p><strong>Name:</strong> ${escapeHtml(input.name)}</p>
       <p><strong>Email:</strong> ${escapeHtml(input.email)}</p>
+      ${input.phone ? `<p><strong>Phone:</strong> ${escapeHtml(input.phone)}</p>` : ""}
       <p><strong>Message:</strong></p>
       <p>${escapeHtml(input.message).replace(/\n/g, "<br/>")}</p>
     `,

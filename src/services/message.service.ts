@@ -21,14 +21,25 @@ export class MessageService {
     return this.formatMessageResponse(message);
   }
 
-  async createMessage(data: { name: string; email: string; message: string }) {
+  async createMessage(data: {
+    name: string;
+    email: string;
+    phone?: string;
+    message: string;
+  }) {
     if (!data.name || !data.email || !data.message) {
       throw new Error("Name, email, and message are required");
+    }
+
+    const phone = typeof data.phone === "string" ? data.phone.trim() : "";
+    if (phone && !/^\+?[\d\s-]{7,20}$/.test(phone)) {
+      throw new Error("Phone number is invalid");
     }
 
     const payload = {
       name: data.name.trim(),
       email: data.email.trim(),
+      phone: phone || undefined,
       message: data.message.trim(),
     };
 
@@ -47,6 +58,7 @@ export class MessageService {
     data: {
       name?: string;
       email?: string;
+      phone?: string;
       message?: string;
     },
   ) {
@@ -58,6 +70,7 @@ export class MessageService {
     const updated = await messageRepository.update(id, {
       name: data.name?.trim(),
       email: data.email?.trim(),
+      phone: data.phone?.trim(),
       message: data.message?.trim(),
     });
 
@@ -87,6 +100,7 @@ export class MessageService {
       id: message.id,
       name: message.name,
       email: message.email,
+      phone: message.phone ?? null,
       message: message.message,
       createdAt: message.created_at,
       updatedAt: message.updated_at,

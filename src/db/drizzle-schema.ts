@@ -173,6 +173,7 @@ export const messages = pgTable("messages", {
   id: serial("id").primaryKey(),
   name: varchar("name", { length: 255 }).notNull(),
   email: varchar("email", { length: 255 }).notNull(),
+  phone: varchar("phone", { length: 30 }),
   message: text("message").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
